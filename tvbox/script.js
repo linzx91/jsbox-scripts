@@ -274,7 +274,7 @@ const search = input => {
 }
 
 const getData = () => {
-  const dataId = "aHR0cHM6Ly95dW4tMTI1OTQ2ODI4OC5maWxlLm15cWNsb3VkLmNvbS90dkJveC9jaGFubmVscy5qc29u"
+  const dataId = "aHR0cHM6Ly95dW4tMTI1OTQ2ODI4OC5jb3MuYXAtZ3Vhbmd6aG91Lm15cWNsb3VkLmNvbS9qc2JveC90dmJveC9jaGFubmVscy5qc29u"
   $app.rotateDisabled = true
   $ui.loading(true)
   $http.get({
