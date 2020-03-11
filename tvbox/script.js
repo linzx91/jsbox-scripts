@@ -1,6 +1,6 @@
 /**erots
 id: 5e53dd25f94e0f000845a360
-build: 17
+build: 18
 source: f3646dfe690f4b629508c51800ef7446
 */
 
@@ -98,8 +98,9 @@ if (isUiColor != undefined && isUiColor == "darkMode") {
 }
 
 if ($cache.get("switch") != undefined && $cache.get("switch").key != undefined) {
-  $cache.remove("switch");
-} else if ($cache.get("switch") == undefined) {
+  $cache.clear();
+}
+if ($cache.get("switch") == undefined) {
   $cache.set("switch", {
     id: "live",
     url: "aHR0cHM6Ly95dW4tMTI1OTQ2ODI4OC5jb3MuYXAtZ3Vhbmd6aG91Lm15cWNsb3VkLmNvbS9qc2JveC90dmJveC9jaGFubmVscy5qc29u"
