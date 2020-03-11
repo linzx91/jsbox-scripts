@@ -2443,7 +2443,7 @@ if ($cache.get("switch").id == "feed") {
             return result;
           };
           data = merge(name, url);
-        } else if (typeof request == "object") {
+        } else if (typeof request == "object" && request[(0, request.length - 1)].hasOwnProperty("name", "url")) {
           try {
             data = request;
           } catch (e) {
