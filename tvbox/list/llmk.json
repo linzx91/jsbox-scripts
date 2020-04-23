@@ -1,0 +1,97 @@
+{
+  "uuid": "f5d4a31b-ba3b-452b-8521-e59c1a91c496",
+  "title": "龙岭迷窟",
+  "type": "episode",
+  "channels": [
+    {
+      "name": "第一集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn2-okzy.com/20200401/8661_fafefc37/1000k/hls/index.m3u8"
+    },
+    {
+      "name": "第二集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn2-okzy.com/20200401/8662_321b984a/index.m3u8"
+    },
+    {
+      "name": "第三集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn2-okzy.com/20200401/8663_d20635c5/index.m3u8"
+    },
+    {
+      "name": "第四集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn2-okzy.com/20200401/8664_2d034499/index.m3u8"
+    },
+    {
+      "name": "第五集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn2-okzy.com/20200401/8665_5f9ae859/index.m3u8"
+    },
+    {
+      "name": "第六集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn2-okzy.com/20200401/8666_3979ea36/index.m3u8"
+    },
+    {
+      "name": "第七集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn2-okzy.com/20200408/8806_bf685934/index.m3u8"
+    },
+    {
+      "name": "第八集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn2-okzy.com/20200408/8807_975361b4/index.m3u8"
+    },
+    {
+      "name": "第九集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn2-okzy.com/20200408/8808_23a9c669/index.m3u8"
+    },
+    {
+      "name": "第十集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn2-okzy.com/20200415/8994_0de609b9/1000k/hls/index.m3u8"
+    },
+    {
+      "name": "第十一集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn2-okzy.com/20200415/8995_02558e00/1000k/hls/index.m3u8"
+    },
+    {
+      "name": "第十二集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn2-okzy.com/20200415/8996_3f315289/1000k/hls/index.m3u8"
+    },
+    {
+      "name": "第十三集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn4-okzy.com/20200415/6314_823bc3ff/1000k/hls/index.m3u8"
+    },
+    {
+      "name": "第十四集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn4-okzy.com/20200415/6317_e0fd0e7f/1000k/hls/index.m3u8"
+    },
+    {
+      "name": "第十五集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn4-okzy.com/20200415/6318_6225b18b/1000k/hls/index.m3u8"
+    },
+    {
+      "name": "第十六集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn4-okzy.com/20200422/6620_658694cc/1000k/hls/index.m3u8"
+    },
+    {
+      "name": "第十七集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn4-okzy.com/20200422/6623_41af40d8/1000k/hls/index.m3u8"
+    },
+    {
+      "name": "第十八集",
+      "logo": "https://imgls.tvsou.com/zm/202004/02/1585811931e8tu/zm213-284.jpg",
+      "url": "https://youku.cdn4-okzy.com/20200422/6624_88eab25f/1000k/hls/index.m3u8"
+    }
+  ]
+}
