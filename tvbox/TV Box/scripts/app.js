@@ -4,7 +4,7 @@ const player = require("/scripts/player");
 
 const [isIpad, isIpadPro, isIphoneX] = [$device.isIpad, $device.isIpadPro, $device.isIphoneX];
 
-const [colors, theme, themeColor, Spinner, popupGuide, toast, lottie, restore, href, getData, getFeedData, search, setFeed, editFeed, feedViewControl, moveArray, inputFocus, hasTouch, apps, play, options] = [ui.colors, ui.theme, ui.themeColor, ui.Spinner, ui.popupGuide, ui.toast, ui.lottie, init.restore, init.href, init.getData, init.getFeedData, init.search, init.setFeed, init.editFeed, init.feedViewControl, init.moveArray, init.inputFocus, init.hasTouch, player.apps, player.play, player.options];
+const [colors, theme, themeColor, Spinner, popupGuide, toast, lottie, restore, href, getData, getFeedData, search, prompt, setFeed, editFeed, feedViewControl, moveArray, apps, play, options] = [ui.colors, ui.theme, ui.themeColor, ui.Spinner, ui.popupGuide, ui.toast, ui.lottie, init.restore, init.href, init.getData, init.getFeedData, init.search, init.prompt, init.setFeed, init.editFeed, init.feedViewControl, init.moveArray, player.apps, player.play, player.options];
 
 let isDarkTheme = ui.isDarkTheme;
 let source = $cache.get("source");
@@ -33,19 +33,19 @@ const navBarButtons = (symbol, object) => {
     events: {
       tapped: async () => {
         if (object === 0) {
-          if (!$("view[2]").hidden) {
-            $("view[2]").relayout();
-            $("view[2]").updateLayout(make => make.top.inset(-36));
+          if (!$("view[3]").hidden) {
+            $("view[3]").relayout();
+            $("view[3]").updateLayout(make => make.top.inset(-36));
             $("input[0]").blur();
             $ui.animate({
               duration: 0.3,
               animation: () => {
-                $("view[2]").alpha = 0;
-                $("view[2]").relayout();
+                $("view[3]").alpha = 0;
+                $("view[3]").relayout();
                 $("blur[4]").alpha = 0;
               },
               completion: () => {
-                $("view[2]").hidden = true;
+                $("view[3]").hidden = true;
                 $("blur[4]").hidden = true;
                 $("view[9]").hidden = false;
                 $("input[0]").text = "";
@@ -77,39 +77,39 @@ const navBarButtons = (symbol, object) => {
                 completion: () => $("blur[0]").hidden = true
               });
             }
-            $("view[2]").relayout();
+            $("view[3]").relayout();
             $("blur[4]").hidden = false;
-            $("view[2]").hidden = false;
+            $("view[3]").hidden = false;
             $("input[0]").focus();
-            $("view[2]").updateLayout(make => make.top.inset(16));
+            $("view[3]").updateLayout(make => make.top.inset(16));
             $ui.animate({
               duration: 0.3,
               animation: () => {
                 $("blur[4]").alpha = 1;
-                $("view[2]").alpha = 1;
-                $("view[2]").relayout();
+                $("view[3]").alpha = 1;
+                $("view[3]").relayout();
               }
             });
           }
         } else if (object === 1) {
-          if ($("view[1]").hidden) {
+          if ($("view[2]").hidden) {
             $("matrix[1]").data = await getData(1, 1);
-            $("view[1]").relayout();
-            $("view[1]").hidden = false;
-            $("view[1]").updateLayout((make, view) => make.top.equalTo(view.super).offset(-16));
+            $("view[2]").relayout();
+            $("view[2]").hidden = false;
+            $("view[2]").updateLayout((make, view) => make.top.equalTo(view.super).offset(-16));
             $ui.animate({
               duration: 0.4,
               animation: () => {
-                $("view[0]").alpha = 0;
-                $("view[1]").relayout();
+                $("view[1]").alpha = 0;
+                $("view[2]").relayout();
               },
               completion: () => {
-                $("view[0]").hidden = true;
-                $("view[1]").relayout();
-                $("view[1]").updateLayout((make, view) => make.top.equalTo(view.super));
+                $("view[1]").hidden = true;
+                $("view[2]").relayout();
+                $("view[2]").updateLayout((make, view) => make.top.equalTo(view.super));
                 $ui.animate({
                   duration: 0.25,
-                  animation: () => $("view[1]").relayout()
+                  animation: () => $("view[2]").relayout()
                 });
               }
             });
@@ -129,16 +129,16 @@ const navBarButtons = (symbol, object) => {
               }
             });
           } else {
-            $("view[0]").hidden = false;
-            $("view[1]").relayout();
-            $("view[1]").updateLayout((make, view) => make.top.equalTo(view.super.frame.height));
+            $("view[1]").hidden = false;
+            $("view[2]").relayout();
+            $("view[2]").updateLayout((make, view) => make.top.equalTo(view.super.frame.height));
             $ui.animate({
               duration: 0.4,
               animation: () => {
-                $("view[1]").relayout();
-                $("view[0]").alpha = 1;
+                $("view[2]").relayout();
+                $("view[1]").alpha = 1;
               },
-              completion: () => $("view[1]").hidden = true
+              completion: () => $("view[2]").hidden = true
             });
             if (!$("stack[0]").hidden) {
               $("stack[0]").hidden = true;
@@ -170,19 +170,19 @@ const navBarButtons = (symbol, object) => {
                 completion: () => $("blur[1]").hidden = true
               });
             }
-            if (!$("view[2]").hidden) {
-              $("view[2]").relayout();
-              $("view[2]").updateLayout(make => make.top.inset(-36));
+            if (!$("view[3]").hidden) {
+              $("view[3]").relayout();
+              $("view[3]").updateLayout(make => make.top.inset(-36));
               $("input[0]").blur();
               $ui.animate({
                 duration: 0.3,
                 animation: () => {
-                  $("view[2]").alpha = 0;
-                  $("view[2]").relayout();
+                  $("view[3]").alpha = 0;
+                  $("view[3]").relayout();
                   $("blur[4]").alpha = 0;
                 },
                 completion: () => {
-                  $("view[2]").hidden = true;
+                  $("view[3]").hidden = true;
                   $("blur[4]").hidden = true;
                   $("view[9]").hidden = false;
                   $("input[0]").text = "";
@@ -313,7 +313,7 @@ const setMainMenu = key => {
             $("list[0]").data = await getData(2, 1);
             $("blur[1]").relayout();
             $("blur[1]").updateLayout(make => make.height.equalTo(0));
-            $("view[3]").hidden = false;
+            $("view[4]").hidden = false;
             $("scroll[0]").relayout();
             $("scroll[0]").updateLayout((make, view) => {
               make.height.equalTo(viewHeight);
@@ -451,9 +451,9 @@ const longPressedMenu = {
     title: "分享",
     symbol: "square.and.arrow.up",
     handler: async (sender, indexPath) => {
-      const data = !$("blur[4]").hidden ? await search($("input[0]").text) : !$("view[1]").hidden ? await getData(1, 0) : $cache.get("channels");
+      const data = !$("blur[4]").hidden ? await search($("input[0]").text) : !$("view[2]").hidden ? await getData(1, 0) : $cache.get("channels");
       const name = data[indexPath.item].name;
-      const url = !$("view[0]").hidden && source.id !== "feed" ? restore(data[indexPath.item].url) : data[indexPath.item].url;
+      const url = !$("view[1]").hidden && source.id !== "feed" ? restore(data[indexPath.item].url) : data[indexPath.item].url;
       $share.sheet([url, name]);
     }
   },
@@ -554,19 +554,19 @@ const navigationBar = {
                     completion: () => $("blur[0]").hidden = true
                   });
                 }
-                if (!$("view[2]").hidden) {
-                  $("view[2]").relayout();
-                  $("view[2]").updateLayout(make => make.top.inset(-36));
+                if (!$("view[3]").hidden) {
+                  $("view[3]").relayout();
+                  $("view[3]").updateLayout(make => make.top.inset(-36));
                   $("input[0]").blur();
                   $ui.animate({
                     duration: 0.3,
                     animation: () => {
-                      $("view[2]").alpha = 0;
-                      $("view[2]").relayout();
+                      $("view[3]").alpha = 0;
+                      $("view[3]").relayout();
                       $("blur[4]").alpha = 0;
                     },
                     completion: () => {
-                      $("view[2]").hidden = true;
+                      $("view[3]").hidden = true;
                       $("blur[4]").hidden = true;
                       $("view[9]").hidden = false;
                       $("input[0]").text = "";
@@ -667,7 +667,7 @@ const themeMenu = {
 const searchBarView = {
   type: "view",
   props: {
-    id: "view[2]",
+    id: "view[3]",
     alpha: 0,
     hidden: true
   },
@@ -760,18 +760,18 @@ const searchBarView = {
           layout: $layout.fill,
           events: {
             tapped: () => {
-              $("view[2]").relayout();
-              $("view[2]").updateLayout(make => make.top.inset(-36));
+              $("view[3]").relayout();
+              $("view[3]").updateLayout(make => make.top.inset(-36));
               $("input[0]").blur();
               $ui.animate({
                 duration: 0.3,
                 animation: () => {
-                  $("view[2]").alpha = 0;
-                  $("view[2]").relayout();
+                  $("view[3]").alpha = 0;
+                  $("view[3]").relayout();
                   $("blur[4]").alpha = 0;
                 },
                 completion: () => {
-                  $("view[2]").hidden = true;
+                  $("view[3]").hidden = true;
                   $("blur[4]").hidden = true;
                   $("view[9]").hidden = false;
                   $("input[0]").text = "";
@@ -875,7 +875,7 @@ const searchMatrix = {
         didSelect: async (sender, indexPath) => {
           const data = await search($("input[0]").text);
           const name = data[indexPath.item].name;
-          const src = !$("view[0]").hidden && source.id !== "feed" ? restore(data[indexPath.item].url) : data[indexPath.item].url;
+          const src = !$("view[1]").hidden && source.id !== "feed" ? restore(data[indexPath.item].url) : data[indexPath.item].url;
           const windowSize = $ui.window.size;
           $("video[0]").relayout();
           $("video[0]").updateLayout(make => make.height.equalTo(windowSize.width >= 500 && windowSize.height >= 1e3 ? 320 : 240));
@@ -903,24 +903,24 @@ const searchMatrix = {
           });
           await $wait(0.3);
           $("video[0]").play();
-          $("view[2]").relayout();
-          $("view[2]").updateLayout(make => make.top.inset(-36));
+          $("view[3]").relayout();
+          $("view[3]").updateLayout(make => make.top.inset(-36));
           $("input[0]").blur();
           $ui.animate({
             duration: 0.3,
             animation: () => {
-              $("view[2]").alpha = 0;
-              $("view[2]").relayout();
+              $("view[3]").alpha = 0;
+              $("view[3]").relayout();
               $("blur[4]").alpha = 0;
             },
             completion: () => {
-              $("view[2]").hidden = true;
+              $("view[3]").hidden = true;
               $("blur[4]").hidden = true;
               $("view[9]").hidden = false;
               $("input[0]").text = "";
               sender.data = [];
               !$cache.get("guide_play") ? popupGuide("guide_play", $("view[7]"), "如果无法播放，可尝试点击这里", colors[26], colors[2], "down") : null;
-              if ($device.networkType === 2) toast($("window"), "exclamationmark.circle.fill", colors[22], "正在使用移动网络播放，请注意流量消耗", 5);
+              if ($device.networkType === 2) toast($("window"), "exclamationmark.circle.fill", colors[22], "非Wi-Fi环境，请注意流量消耗", 5);
             }
           });
         },
@@ -1011,7 +1011,7 @@ const videoTitleBar = {
         longPressed: async info => {
           if (info.sender.text != videoTitleBar.views[1].props.text) {
             const index = await search(info.sender.text);
-            const matrix = !$("view[0]").hidden ? $("matrix[0]") : $("matrix[1]");
+            const matrix = !$("view[1]").hidden ? $("matrix[0]") : $("matrix[1]");
             if (index != -1) {
               if (!$("stack[0]").hidden) $("stack[0]").hidden = true;
               matrix.scrollTo({
@@ -1020,19 +1020,19 @@ const videoTitleBar = {
               });
               if (!$cache.get("guide_videoTitleBar")) $cache.set("guide_videoTitleBar", 1);
               $device.taptic(1);
-              if (!$("view[2]").hidden) {
-                $("view[2]").relayout();
-                $("view[2]").updateLayout(make => make.top.inset(-36));
+              if (!$("view[3]").hidden) {
+                $("view[3]").relayout();
+                $("view[3]").updateLayout(make => make.top.inset(-36));
                 $("input[0]").blur();
                 $ui.animate({
                   duration: 0.3,
                   animation: () => {
-                    $("view[2]").alpha = 0;
-                    $("view[2]").relayout();
+                    $("view[3]").alpha = 0;
+                    $("view[3]").relayout();
                     $("blur[4]").alpha = 0;
                   },
                   completion: () => {
-                    $("view[2]").hidden = true;
+                    $("view[3]").hidden = true;
                     $("blur[4]").hidden = true;
                     $("view[9]").hidden = false;
                     $("input[0]").text = "";
@@ -1055,7 +1055,7 @@ const videoTitleBar = {
 const mainMatrixView = {
   type: "view",
   props: {
-    id: "view[0]"
+    id: "view[1]"
   },
   layout: (make, view) => {
     make.top.equalTo(view.prev.bottom);
@@ -1134,7 +1134,7 @@ const mainMatrixView = {
       events: {
         itemLocation: 0,
         ready: async sender => {
-          const spinner = new Spinner($("view[0]"), "loadData");
+          const spinner = new Spinner($("view[1]"), "loadData");
           spinner.start();
           await $wait(0.3);
           sender.data = source.id === "feed" ? await getFeedData() : await getData(0, 1);
@@ -1204,16 +1204,16 @@ const mainMatrixView = {
           $("video[0]").play();
           await $wait(0.3);
           !$cache.get("guide_play") ? popupGuide("guide_play", $("view[7]"), "如果无法播放，可尝试点击这里", colors[26], colors[2], "down") : null;
-          if ($device.networkType === 2) toast($("window"), "exclamationmark.circle.fill", colors[22], "正在使用移动网络播放，请注意流量消耗", 5);
+          if ($device.networkType === 2) toast($("window"), "exclamationmark.circle.fill", colors[22], "非Wi-Fi环境，请注意流量消耗", 5);
         },
         didScroll: sender => {
           const scrollOffset = parseFloat((sender.contentOffset.y / 10).toFixed(2));
           $("label[0]").prev.alpha = scrollOffset >= 1 ? 1 : scrollOffset <= 0 ? 0 : scrollOffset;
         },
         didEndDragging: async sender => {
-          const scrollOffset = parseFloat((sender.contentOffset.y / 10).toFixed(2));
-          const viewHeight = sender.frame.height / 10;
-          !$cache.get("guide_videoTitleBar") && $("video[0]").src && (scrollOffset >= this.itemLocation + viewHeight || scrollOffset <= this.itemLocation - viewHeight) && await search($("label[0]").text) != -1 ? popupGuide("guide_videoTitleBar", $("view[7]"), `点击播放，长按滚动至当前${source.id === "movie" ? "影片" : "频道"}位置`, colors[26], colors[2], "down") : null;
+          const scrollOffset = parseFloat((sender.contentOffset.y * 0.1).toFixed(2));
+          const viewHeight = sender.frame.height * 0.05;
+          !$cache.get("guide_videoTitleBar") && $("video[0]").src && (scrollOffset >= this.itemLocation + viewHeight || scrollOffset <= this.itemLocation - viewHeight) && await search($("label[0]").text) !== -1 ? popupGuide("guide_videoTitleBar", $("view[7]"), `点击播放，长按滚动至当前${source.id === "movie" ? "影片" : "频道"}位置`, colors[26], colors[2], "down") : null;
         }
       }
     }
@@ -1223,7 +1223,7 @@ const mainMatrixView = {
 const favoritesView = {
   type: "view",
   props: {
-    id: "view[1]",
+    id: "view[2]",
     hidden: true
   },
   layout: (make, view) => {
@@ -1236,16 +1236,16 @@ const favoritesView = {
       layout: (make, view) => make.size.equalTo(view.super),
       events: {
         tapped: () => {
-          $("view[0]").hidden = false;
-          $("view[1]").relayout();
-          $("view[1]").updateLayout((make, view) => make.top.equalTo(view.super.frame.height));
+          $("view[1]").hidden = false;
+          $("view[2]").relayout();
+          $("view[2]").updateLayout((make, view) => make.top.equalTo(view.super.frame.height));
           $ui.animate({
             duration: 0.4,
             animation: () => {
-              $("view[1]").relayout();
-              $("view[0]").alpha = 1;
+              $("view[2]").relayout();
+              $("view[1]").alpha = 1;
             },
-            completion: () => $("view[1]").hidden = true
+            completion: () => $("view[2]").hidden = true
           });
           if (!$("stack[0]").hidden) {
             $("matrix[1]").scrollToOffset($point(0, 0));
@@ -1362,7 +1362,7 @@ const favoritesView = {
               $("video[0]").play();
               await $wait(0.3);
               !$cache.get("guide_play") ? popupGuide("guide_play", $("view[7]"), "如果无法播放，可尝试点击这里", colors[26], colors[2], "down") : null;
-              if ($device.networkType === 2) toast($("window"), "exclamationmark.circle.fill", colors[22], "正在使用移动网络播放，请注意流量消耗", 5);
+              if ($device.networkType === 2) toast($("window"), "exclamationmark.circle.fill", colors[22], "非Wi-Fi环境，请注意流量消耗", 5);
             },
             willBeginDragging: () => {
               if (!$("stack[0]").hidden) $("stack[0]").hidden = true;
@@ -1477,19 +1477,19 @@ const favoritesView = {
                           },
                           completion: () => $("blur[0]").hidden = true
                         });
-                      } else if (!$("view[2]").hidden) {
-                        $("view[2]").relayout();
-                        $("view[2]").updateLayout(make => make.top.inset(-36));
+                      } else if (!$("view[3]").hidden) {
+                        $("view[3]").relayout();
+                        $("view[3]").updateLayout(make => make.top.inset(-36));
                         $("input[0]").blur();
                         $ui.animate({
                           duration: 0.3,
                           animation: () => {
-                            $("view[2]").alpha = 0;
-                            $("view[2]").relayout();
+                            $("view[3]").alpha = 0;
+                            $("view[3]").relayout();
                             $("blur[4]").alpha = 0;
                           },
                           completion: () => {
-                            $("view[2]").hidden = true;
+                            $("view[3]").hidden = true;
                             $("blur[4]").hidden = true;
                             $("view[9]").hidden = false;
                             $("input[0]").text = "";
@@ -1543,17 +1543,17 @@ const favoritesView = {
                 popupGuide("guide_favorite", sender, "长按可以编辑和删除收藏的内容", colors[26], colors[2], "down");
               } else {
                 if (!$("stack[0]").hidden) $("matrix[1]").scrollToOffset($point(0, 0));
-                $("view[0]").hidden = false;
-                $("view[1]").relayout();
-                $("view[1]").updateLayout((make, view) => make.top.equalTo(view.super.frame.height));
+                $("view[1]").hidden = false;
+                $("view[2]").relayout();
+                $("view[2]").updateLayout((make, view) => make.top.equalTo(view.super.frame.height));
                 $ui.animate({
                   duration: 0.4,
                   animation: () => {
-                    $("view[1]").relayout();
-                    $("view[0]").alpha = 1;
+                    $("view[2]").relayout();
+                    $("view[1]").alpha = 1;
                   },
                   completion: () => {
-                    $("view[1]").hidden = true;
+                    $("view[2]").hidden = true;
                     $("stack[0]").hidden = true;
                   }
                 });
@@ -1584,7 +1584,7 @@ const favoritesView = {
 const feedList = {
   type: "view",
   props: {
-    id: "view[3]",
+    id: "view[4]",
     hidden: true
   },
   layout: (make, view) => {
@@ -1595,7 +1595,7 @@ const feedList = {
     {
       type: "view",
       props: {
-        id: "view[6]",
+        id: "view[5]",
         bgcolor: colors[30],
         alpha: 0
       },
@@ -1618,8 +1618,8 @@ const feedList = {
         didScroll: sender => {
           const scrollOffset = parseFloat((sender.contentOffset.y / (sender.frame.height)).toFixed(2));
           const scrollToBottom = sender.contentOffset.y > sender.frame.height;
-          $("view[6]").alpha = scrollOffset <= 0 ? 0 : scrollOffset >= 1 ? 1 : scrollOffset;
-          $("view[3]").hidden = scrollOffset <= 0 ? true : false;
+          $("view[5]").alpha = scrollOffset <= 0 ? 0 : scrollOffset >= 1 ? 1 : scrollOffset;
+          $("view[4]").hidden = scrollOffset <= 0 ? true : false;
           sender.alwaysBounceVertical = scrollToBottom ? false : true;
         },
         didEndDecelerating: sender => feedViewControl(sender, 0)
@@ -1723,23 +1723,7 @@ const feedList = {
                         url: data[indexPath.item].url,
                         data: data[indexPath.item].data
                       };
-                      $("input[2]").text = data[indexPath.item].name;
-                      $("view[5]").hidden = false;
-                      $ui.animate({
-                        duration: 0.3,
-                        animation: () => $("view[5]").alpha = 1,
-                        completion: () => {
-                          const y = $ui.window.center.y / 3;
-                          $("input[2]").focus();
-                          $("blur[10]").relayout();
-                          $("blur[10]").updateLayout(make => make.centerY.equalTo(-y));
-                          $ui.animate({
-                            duration: 0.3,
-                            animation: () => $("blur[10]").relayout(),
-                            completion: () => $app.autoKeyboardEnabled = true
-                          });
-                        }
-                      });
+                      prompt("重新命名", data[indexPath.item].name, "请输入订阅名称", editFeed);
                     }
                   },
                   {
@@ -1911,24 +1895,8 @@ const feedList = {
                   ],
                   events: {
                     tapped: () => {
-                      $("view[4]").hidden = false;
-                      $ui.animate({
-                        duration: 0.3,
-                        animation: () => $("view[4]").alpha = 1,
-                        completion: () => {
-                          const y = $ui.window.center.y / 3;
-                          const isFeedLink = new RegExp(/^https?:\/\/.+\.(m3u|json|txt)$/).test($clipboard.link);
-                          $("input[1]").text = isFeedLink ? $clipboard.link : "";
-                          $("input[1]").focus();
-                          $("blur[9]").relayout();
-                          $("blur[9]").updateLayout(make => make.centerY.equalTo(-y));
-                          $ui.animate({
-                            duration: 0.3,
-                            animation: () => $("blur[9]").relayout(),
-                            completion: () => $app.autoKeyboardEnabled = true
-                          });
-                        }
-                      });
+                      const isFeedLink = new RegExp(/^https?:\/\/.+\.(m3u|json|txt)$/).test($clipboard.link);
+                      prompt("添加订阅", isFeedLink ? $clipboard.link : "", "仅支持m3u, json, txt订阅格式", setFeed);
                     }
                   }
                 },
@@ -1953,320 +1921,6 @@ const feedList = {
               ]
             }
           ]
-        }
-      ]
-    }
-  ]
-};
-
-const addFeedView = {
-  type: "view",
-  props: {
-    id: "view[4]",
-    bgcolor: colors[30],
-    alpha: 0,
-    hidden: true
-  },
-  layout: $layout.fill,
-  views: [
-    {
-      type: "view",
-      layout: $layout.fill,
-      events: {
-        tapped: () => {
-          $("input[1]").blur();
-          $("blur[9]").relayout();
-          $("blur[9]").updateLayout((make, view) => make.center.equalTo(view.super));
-          $ui.animate({
-            duration: 0.3,
-            animation: () => $("blur[9]").relayout(),
-            completion: () => $app.autoKeyboardEnabled = false
-          });
-        }
-      }
-    },
-    {
-      type: "blur",
-      props: {
-        id: "blur[9]",
-        style: themeColor[10],
-        cornerRadius: 16,
-        smoothCorners: true
-      },
-      layout: (make, view) => {
-        make.width.equalTo(280);
-        make.height.equalTo(156);
-        make.center.equalTo(view.super);
-      },
-      views: [
-        {
-          type: "label",
-          props: {
-            text: "添加订阅",
-            textColor: themeColor[3],
-            font: $font("bold", 20),
-            align: $align.center
-          },
-          layout: make => {
-            make.height.equalTo(32);
-            make.top.left.right.inset(16);
-          }
-        },
-        {
-          type: "input",
-          props: {
-            id: "input[1]",
-            type: $kbType.url,
-            cornerRadius: 8,
-            smoothCorners: true,
-            borderWidth: 1,
-            borderColor: themeColor[11],
-            tintColor: themeColor[3],
-            textColor: themeColor[3],
-            bgcolor: themeColor[7],
-            placeholder: "仅支持m3u, json, txt订阅格式",
-            font: $font(14),
-            accessoryView: {}
-          },
-          layout: (make, view) => {
-            make.height.equalTo(32);
-            make.centerY.equalTo(view.super);
-            make.left.right.inset(16);
-          },
-          events: {
-            ready: sender => inputFocus(sender, $("blur[9]")),
-            returned: sender => setFeed()
-          }
-        },
-        {
-          type: "stack",
-          layout: make => {
-            make.height.equalTo(48);
-            make.left.right.bottom.inset(-0.2);
-          },
-          props: {
-            spacing: 0,
-            axis: 0,
-            distribution: 1,
-            alignment: 0,
-            stack: {
-              views: [
-                {
-                  type: "label",
-                  props: {
-                    text: "取消",
-                    align: $align.center,
-                    cornerRadius: 0,
-                    borderWidth: 0.2,
-                    borderColor: $color("gray"),
-                    textColor: colors[9],
-                    font: $font("bold", 18)
-                  },
-                  events: {
-                    touchesBegan: hasTouch.touchesBegan,
-                    touchesMoved: hasTouch.touchesMoved,
-                    touchesEnded: hasTouch.touchesEnded,
-                    tapped: sender => {
-                      sender.bgcolor = $color("clear");
-                      $("input[1]").blur();
-                      $("blur[9]").relayout();
-                      $("blur[9]").updateLayout((make, view) => make.center.equalTo(view.super));
-                      $ui.animate({
-                        duration: 0.3,
-                        animation: () => $("blur[9]").relayout()
-                      });
-                      $ui.animate({
-                        duration: 0.3,
-                        animation: () => $("view[4]").alpha = 0,
-                        completion: () => {
-                          $("view[4]").hidden = true;
-                          $app.autoKeyboardEnabled = false;
-                        }
-                      });
-                    }
-                  }
-                },
-                {
-                  type: "label",
-                  props: {
-                    text: "完成",
-                    align: $align.center,
-                    cornerRadius: 0,
-                    borderWidth: 0.2,
-                    borderColor: $color("gray"),
-                    textColor: colors[9],
-                    font: $font("bold", 18)
-                  },
-                  events: {
-                    touchesBegan: hasTouch.touchesBegan,
-                    touchesMoved: hasTouch.touchesMoved,
-                    touchesEnded: hasTouch.touchesEnded,
-                    tapped: sender => {
-                      setFeed();
-                      sender.bgcolor = $color("clear");
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      ]
-    }
-  ]
-};
-
-const editFeedView = {
-  type: "view",
-  props: {
-    id: "view[5]",
-    bgcolor: colors[30],
-    alpha: 0,
-    hidden: true
-  },
-  layout: $layout.fill,
-  views: [
-    {
-      type: "view",
-      layout: $layout.fill,
-      events: {
-        tapped: () => {
-          $("input[2]").blur();
-          $("blur[10]").relayout();
-          $("blur[10]").updateLayout((make, view) => make.center.equalTo(view.super));
-          $ui.animate({
-            duration: 0.3,
-            animation: () => $("blur[10]").relayout(),
-            completion: () => $app.autoKeyboardEnabled = false
-          });
-        }
-      }
-    },
-    {
-      type: "blur",
-      props: {
-        id: "blur[10]",
-        style: themeColor[10],
-        cornerRadius: 16,
-        smoothCorners: true
-      },
-      layout: (make, view) => {
-        make.width.equalTo(280);
-        make.height.equalTo(156);
-        make.center.equalTo(view.super);
-      },
-      views: [
-        {
-          type: "label",
-          props: {
-            text: "重新命名",
-            textColor: themeColor[3],
-            font: $font("bold", 20),
-            align: $align.center
-          },
-          layout: make => {
-            make.height.equalTo(32);
-            make.top.left.right.inset(16);
-          }
-        },
-        {
-          type: "input",
-          props: {
-            id: "input[2]",
-            type: $kbType.default,
-            cornerRadius: 8,
-            smoothCorners: true,
-            borderWidth: 1,
-            borderColor: themeColor[11],
-            tintColor: themeColor[3],
-            textColor: themeColor[3],
-            bgcolor: themeColor[7],
-            placeholder: "请输入订阅名称",
-            font: $font(14),
-            accessoryView: {}
-          },
-          layout: (make, view) => {
-            make.height.equalTo(32);
-            make.centerY.equalTo(view.super);
-            make.left.right.inset(16);
-          },
-          events: {
-            ready: sender => inputFocus(sender, $("blur[10]")),
-            returned: sender => editFeed.handler()
-          }
-        },
-        {
-          type: "stack",
-          layout: make => {
-            make.height.equalTo(48);
-            make.left.right.bottom.inset(-0.2);
-          },
-          props: {
-            spacing: 0,
-            axis: 0,
-            distribution: 1,
-            alignment: 0,
-            stack: {
-              views: [
-                {
-                  type: "label",
-                  props: {
-                    text: "取消",
-                    align: $align.center,
-                    cornerRadius: 0,
-                    borderWidth: 0.2,
-                    borderColor: $color("gray"),
-                    textColor: colors[9],
-                    font: $font("bold", 18)
-                  },
-                  events: {
-                    touchesBegan: hasTouch.touchesBegan,
-                    touchesMoved: hasTouch.touchesMoved,
-                    touchesEnded: hasTouch.touchesEnded,
-                    tapped: sender => {
-                      sender.bgcolor = $color("clear");
-                      $("input[2]").blur();
-                      $("blur[10]").relayout();
-                      $("blur[10]").updateLayout((make, view) => make.center.equalTo(view.super));
-                      $ui.animate({
-                        duration: 0.3,
-                        animation: () => $("blur[10]").relayout()
-                      });
-                      $ui.animate({
-                        duration: 0.3,
-                        animation: () => $("view[5]").alpha = 0,
-                        completion: () => {
-                          $("view[5]").hidden = true;
-                          $app.autoKeyboardEnabled = false;
-                        }
-                      });
-                    }
-                  }
-                },
-                {
-                  type: "label",
-                  props: {
-                    text: "完成",
-                    align: $align.center,
-                    cornerRadius: 0,
-                    borderWidth: 0.2,
-                    borderColor: $color("gray"),
-                    textColor: colors[9],
-                    font: $font("bold", 18)
-                  },
-                  events: {
-                    touchesBegan: hasTouch.touchesBegan,
-                    touchesMoved: hasTouch.touchesMoved,
-                    touchesEnded: hasTouch.touchesEnded,
-                    tapped: sender => {
-                      editFeed.handler();
-                      sender.bgcolor = $color("clear");
-                    }
-                  }
-                }
-              ]
-            }
-          }
         }
       ]
     }
@@ -2898,8 +2552,6 @@ exports.window = {
       ]
     },
     feedList,
-    addFeedView,
-    editFeedView,
     rewardView,
     exitGuide
   ]

@@ -269,7 +269,7 @@ const popupGuide = (id, sender, text, bgColor, textColor, direction, duration) =
 };
 
 const toast = (sender, symbol, color, text, duration) => {
-  const time = new Date().getTime();
+  const timestamp = new Date().valueOf();
   const topInset = sender.frame.height * 0.11;
   const textSize = $text.sizeThatFits({
     text: text,
@@ -277,12 +277,13 @@ const toast = (sender, symbol, color, text, duration) => {
     font: $font("bold", 16)
   });
   if (!duration) duration = text.length * 0.3;
-  const toastView = {
+  if ($("blur[2]")) $("blur[2]").remove();
+  sender.add({
     type: "blur",
     props: {
       id: "blur[2]",
       style: themeColor[15],
-      info: time,
+      info: timestamp,
       cornerRadius: 18,
       smoothCorners: true,
       userInteractionEnabled: false
@@ -329,9 +330,7 @@ const toast = (sender, symbol, color, text, duration) => {
         }
       }
     ]
-  };
-  if ($("blur[2]")) $("blur[2]").remove();
-  sender.add(toastView);
+  });
   if (!$("blur[2]")) return;
   $("blur[2]").relayout();
   $("blur[2]").updateLayout(make => make.top.inset(topInset));
@@ -340,7 +339,7 @@ const toast = (sender, symbol, color, text, duration) => {
     animation: () => $("blur[2]").relayout(),
     completion: async () => {
       await $wait(duration);
-      if (!$("blur[2]") || $("blur[2]").info !== time) return;
+      if ($("blur[2]").info !== timestamp) return;
       $("blur[2]").relayout();
       $("blur[2]").updateLayout(make => make.top.inset(-36));
       $ui.animate({
@@ -355,12 +354,13 @@ const toast = (sender, symbol, color, text, duration) => {
 const lottie = async (object, start, end, loop = false) => {
   object = JSON.parse($data({path: `/assets/${object}.json`}).string);
   start === undefined ? (start = 0, end = object.op) : start === true ? ((start = 0, end = object.op), loop = true) : end === true ? ((end = start, start = 0), loop = true) : end === undefined ? (end = start, start = 0) : null;
-  const time = new Date().getTime();
-  const views = {
+  const timestamp = new Date().valueOf();
+  if ($("view[0]")) $("view[0]").remove();
+  $("window").add({
     type: "view",
     props: {
-      id: "view[10]",
-      info: time,
+      id: "view[0]",
+      info: timestamp,
       bgcolor: colors[30],
       alpha: 0
     },
@@ -390,23 +390,20 @@ const lottie = async (object, start, end, loop = false) => {
         ]
       }
     ]
-  };
-  if ($("view[10]")) $("view[10]").remove();
-  $("window").add(views);
-  if (!$("view[10]")) return;
-  $ui.animate({
+  });
+  if ($("view[0]")) $ui.animate({
     duration: 0.3,
-    animation: () => $("view[10]").alpha = 1,
+    animation: () => $("view[0]").alpha = 1,
     completion: () => {
-      if (!$("view[10]") || $("view[10]").info !== time) return;
+      if ($("view[0]").info !== timestamp) return;
       $("lottie").play({
         fromFrame: start,
         toFrame: end,
         handler: finished => {
           if (finished) $ui.animate({
             duration: 0.3,
-            animation: () => $("view[10]").alpha = 0,
-            completion: () => $("view[10]").remove()
+            animation: () => $("view[0]").alpha = 0,
+            completion: () => $("view[0]").remove()
           });
         }
       });
