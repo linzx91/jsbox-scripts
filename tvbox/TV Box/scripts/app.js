@@ -1635,224 +1635,232 @@ const feedList = {
           },
           views: [
             {
-              type: "list",
+              type: "scroll",
               layout: make => {
                 make.top.left.right.inset(0);
                 make.bottom.inset(63);
               },
-              props: {
-                id: "list[0]",
-                style: 0,
-                rowHeight: 48,
-                reorder: true,
-                showsHorizontalIndicator: false,
-                showsVerticalIndicator: false,
-                separatorColor: themeColor[11],
-                bgcolor: $color("clear"),
-                template: {
-                  props: {
-                    bgcolor: $color("clear")
-                  },
-                  views: [
-                    {
-                      type: "image",
-                      props: {
-                        symbol: "tv",
-                        tintColor: themeColor[3],
-                        contentMode: 4
-                      },
-                      layout: make => {
-                        make.size.equalTo($size(24, 24));
-                        make.left.inset(20);
-                        make.centerY.inset(0);
-                      }
-                    },
-                    {
-                      type: "label",
-                      props: {
-                        textColor: themeColor[3]
-                      },
-                      layout: (make, view) => {
-                        make.top.bottom.inset(0);
-                        make.left.equalTo(view.prev.right).offset(20);
-                        make.right.inset(60);
-                      }
-                    },
-                    {
-                      type: "image",
-                      props: {
-                        id: "mark",
-                        symbol: "checkmark",
-                        tintColor: colors[4],
-                        contentMode: 4,
-                        hidden: true
-                      },
-                      layout: make => {
-                        make.size.equalTo($size(24, 24));
-                        make.right.inset(20);
-                        make.centerY.inset(0);
-                      }
-                    }
-                  ]
-                },
-                actions: [
-                  {
-                    title: "delete",
-                    handler: async (sender, indexPath) => {
-                      const item = indexPath.item;
-                      const data = await getData(2, 0);
-                      data.splice(item, 1);
-                      $file.write({
-                        data: $data({
-                          string: JSON.stringify(data)
-                        }),
-                        path: "shared://tvbox/feeds.json"
-                      });
-                      await $wait(0.3);
-                      $("list[0]").data = await getData(2, 1);
-                    }
-                  },
-                  {
-                    title: "重新命名",
-                    color: colors[5],
-                    handler: async (sender, indexPath) => {
-                      const data = await getData(2, 0);
-                      editFeed.data = {
-                        index: indexPath.item,
-                        name: data[indexPath.item].name,
-                        url: data[indexPath.item].url,
-                        data: data[indexPath.item].data
-                      };
-                      prompt("重新命名", data[indexPath.item].name, "请输入订阅名称", editFeed);
-                    }
-                  },
-                  {
-                    title: "更新",
-                    color: colors[26],
-                    handler: async (sender, indexPath) => {
-                      const spinner = new Spinner("正在更新");
-                      spinner.start();
-                      const data = await getData(2, 0);
-                      const url = data[indexPath.item].url;
-                      const oldData = data[indexPath.item].data;
-                      const newData = await getData(url);
-                      data[indexPath.item].data = newData ? newData : oldData;
-                      $file.write({
-                        data: $data({
-                          string: JSON.stringify(data)
-                        }),
-                        path: "shared://tvbox/feeds.json"
-                      });
-                      if (url === source.url) $("matrix[0]").data = await getFeedData(1, indexPath.item, url);
-                      spinner.stop();
-                      lottie(newData ? "checkmark" : "xmark");
-                      if (newData) toast($("window"), "checkmark.circle.fill", colors[26], `更新成功，共计 ${newData.length} 个播放源`);
-                    }
-                  },
-                  {
-                    title: "分享",
-                    color: colors[4],
-                    handler: async (sender, indexPath) => {
-                      const data = await getData(2, 0);
-                      $share.sheet([data[indexPath.item].url, data[indexPath.item].name]);
-                    }
-                  }
-                ],
-                header: {
-                  type: "view",
-                  props: {
-                    height: 68
-                  }
-                },
-                footer: {
-                  type: "view",
-                  props: {
-                    height: isIpad || isIpadPro || isIphoneX ? 49 : 1
-                  }
-                }
-              },
               events: {
-                didSelect: async (sender, indexPath) => {
-                  const data = await getData(2, 0);
-                  const name = data[indexPath.item].name;
-                  const url = data[indexPath.item].url;
-                  const oldData = data[indexPath.item].data;
-                  if (!oldData) {
-                    const spinner = new Spinner("正在更新");
-                    spinner.start();
-                    const newData = await getData(url);
-                    data[indexPath.item].data = newData;
-                    if (newData) $file.write({
-                      data: $data({
-                        string: JSON.stringify(data)
-                      }),
-                      path: "shared://tvbox/feeds.json"
-                    });
-                    spinner.stop();
-                    lottie(newData ? "checkmark" : "xmark");
-                    if (!newData) return;
-                  }
-                  const channels = [
-                    await getFeedData(0, indexPath.item, url),
-                    await getFeedData(1, indexPath.item, url)
-                  ];
-                  $cache.set("source", {
-                    id: "feed",
-                    name: name,
-                    url: url
-                  });
-                  $cache.set("channels", channels[0]);
-                  $("matrix[0]").data = channels[1];
-                  source.id === "feed" ? ($("matrix[0]").scrollToOffset($point(0, 0)), $("scroll[0]").scrollToOffset($point(0, 0)), toast($("window"), "checkmark.circle.fill", colors[26], `该订阅一共收录了 ${channels[0].length} 个播放源`)) : $addin.restart();
-                  source = $cache.get("source");
-                },
-                reorderBegan: async indexPath => moveArray.data = await getData(2, 0),
-                reorderMoved: (fromIndexPath, toIndexPath) => moveArray.index(moveArray.data, fromIndexPath.item, toIndexPath.item),
-                reorderFinished: () => {
-                  const data = moveArray.data;
-                  $file.write({
-                    data: $data({
-                      string: JSON.stringify(data)
-                    }),
-                    path: "shared://tvbox/feeds.json"
-                  });
-                },
-                didScroll: sender => {
-                  const scrollOffset = parseFloat((sender.contentOffset.y / 10).toFixed(2));
-                  sender.next.alpha = scrollOffset <= 0 ? 0 : scrollOffset >= 1 ? 1 : scrollOffset;
-                }
+                layoutSubviews: sender => $("list[0]").frame = $rect(0, 0, sender.frame.width, sender.frame.height)
               },
               views: [
                 {
-                  type: "label",
+                  type: "list",
                   props: {
-                    id: "label[2]",
-                    text: "暂无订阅内容",
-                    textColor: $color("gray"),
-                    font: $font("bold", 22),
-                    align: $align.center,
-                    hidden: true
+                    id: "list[0]",
+                    style: 0,
+                    rowHeight: 48,
+                    reorder: true,
+                    showsHorizontalIndicator: false,
+                    showsVerticalIndicator: false,
+                    separatorColor: themeColor[11],
+                    bgcolor: $color("clear"),
+                    template: {
+                      props: {
+                        bgcolor: $color("clear")
+                      },
+                      views: [
+                        {
+                          type: "image",
+                          props: {
+                            symbol: "tv",
+                            tintColor: themeColor[3],
+                            contentMode: 4
+                          },
+                          layout: make => {
+                            make.size.equalTo($size(24, 24));
+                            make.left.inset(20);
+                            make.centerY.inset(0);
+                          }
+                        },
+                        {
+                          type: "label",
+                          props: {
+                            textColor: themeColor[3]
+                          },
+                          layout: (make, view) => {
+                            make.top.bottom.inset(0);
+                            make.left.equalTo(view.prev.right).offset(20);
+                            make.right.inset(60);
+                          }
+                        },
+                        {
+                          type: "image",
+                          props: {
+                            id: "mark",
+                            symbol: "checkmark",
+                            tintColor: colors[4],
+                            contentMode: 4,
+                            hidden: true
+                          },
+                          layout: make => {
+                            make.size.equalTo($size(24, 24));
+                            make.right.inset(20);
+                            make.centerY.inset(0);
+                          }
+                        }
+                      ]
+                    },
+                    actions: [
+                      {
+                        title: "delete",
+                        handler: async (sender, indexPath) => {
+                          const item = indexPath.item;
+                          const data = await getData(2, 0);
+                          data.splice(item, 1);
+                          $file.write({
+                            data: $data({
+                              string: JSON.stringify(data)
+                            }),
+                            path: "shared://tvbox/feeds.json"
+                          });
+                          await $wait(0.3);
+                          $("list[0]").data = await getData(2, 1);
+                        }
+                      },
+                      {
+                        title: "重新命名",
+                        color: colors[5],
+                        handler: async (sender, indexPath) => {
+                          const data = await getData(2, 0);
+                          editFeed.data = {
+                            index: indexPath.item,
+                            name: data[indexPath.item].name,
+                            url: data[indexPath.item].url,
+                            data: data[indexPath.item].data
+                          };
+                          prompt("重新命名", data[indexPath.item].name, "请输入订阅名称", editFeed);
+                        }
+                      },
+                      {
+                        title: "更新",
+                        color: colors[26],
+                        handler: async (sender, indexPath) => {
+                          const spinner = new Spinner("正在更新");
+                          spinner.start();
+                          const data = await getData(2, 0);
+                          const url = data[indexPath.item].url;
+                          const oldData = data[indexPath.item].data;
+                          const newData = await getData(url);
+                          data[indexPath.item].data = newData ? newData : oldData;
+                          $file.write({
+                            data: $data({
+                              string: JSON.stringify(data)
+                            }),
+                            path: "shared://tvbox/feeds.json"
+                          });
+                          if (url === source.url) $("matrix[0]").data = await getFeedData(1, indexPath.item, url);
+                          spinner.stop();
+                          lottie(newData ? "checkmark" : "xmark");
+                          if (newData) toast($("window"), "checkmark.circle.fill", colors[26], `更新成功，共计 ${newData.length} 个播放源`);
+                        }
+                      },
+                      {
+                        title: "分享",
+                        color: colors[4],
+                        handler: async (sender, indexPath) => {
+                          const data = await getData(2, 0);
+                          $share.sheet([data[indexPath.item].url, data[indexPath.item].name]);
+                        }
+                      }
+                    ],
+                    header: {
+                      type: "view",
+                      props: {
+                        height: 68
+                      }
+                    },
+                    footer: {
+                      type: "view",
+                      props: {
+                        height: isIpad || isIpadPro || isIphoneX ? 49 : 1
+                      }
+                    }
                   },
-                  layout: (make, view) => make.center.inset(view.super)
+                  events: {
+                    didSelect: async (sender, indexPath) => {
+                      const data = await getData(2, 0);
+                      const name = data[indexPath.item].name;
+                      const url = data[indexPath.item].url;
+                      const oldData = data[indexPath.item].data;
+                      if (!oldData) {
+                        const spinner = new Spinner("正在更新");
+                        spinner.start();
+                        const newData = await getData(url);
+                        data[indexPath.item].data = newData;
+                        if (newData) $file.write({
+                          data: $data({
+                            string: JSON.stringify(data)
+                          }),
+                          path: "shared://tvbox/feeds.json"
+                        });
+                        spinner.stop();
+                        lottie(newData ? "checkmark" : "xmark");
+                        if (!newData) return;
+                      }
+                      const channels = [
+                        await getFeedData(0, indexPath.item, url),
+                        await getFeedData(1, indexPath.item, url)
+                      ];
+                      $cache.set("source", {
+                        id: "feed",
+                        name: name,
+                        url: url
+                      });
+                      $cache.set("channels", channels[0]);
+                      $("matrix[0]").data = channels[1];
+                      source.id === "feed" ? ($("matrix[0]").scrollToOffset($point(0, 0)), $("scroll[0]").scrollToOffset($point(0, 0)), toast($("window"), "checkmark.circle.fill", colors[26], `该订阅一共收录了 ${channels[0].length} 个播放源`)) : $addin.restart();
+                      source = $cache.get("source");
+                    },
+                    reorderBegan: async indexPath => moveArray.data = await getData(2, 0),
+                    reorderMoved: (fromIndexPath, toIndexPath) => moveArray.index(moveArray.data, fromIndexPath.item, toIndexPath.item),
+                    reorderFinished: () => {
+                      const data = moveArray.data;
+                      $file.write({
+                        data: $data({
+                          string: JSON.stringify(data)
+                        }),
+                        path: "shared://tvbox/feeds.json"
+                      });
+                    },
+                    didScroll: sender => {
+                      const scrollOffset = parseFloat((sender.contentOffset.y / 10).toFixed(2));
+                      sender.super.next.alpha = scrollOffset <= 0 ? 0 : scrollOffset >= 1 ? 1 : scrollOffset;
+                    }
+                  },
+                  views: [
+                    {
+                      type: "label",
+                      props: {
+                        id: "label[2]",
+                        text: "暂无订阅内容",
+                        textColor: $color("gray"),
+                        font: $font("bold", 22),
+                        align: $align.center,
+                        hidden: true
+                      },
+                      layout: (make, view) => make.center.inset(view.super)
+                    }
+                  ]
                 }
               ]
             },
             {
               type: "blur",
               props: {
-                style: themeColor[16],
+                style: themeColor[15],
                 alpha: 0
               },
               layout: (make, view) => {
                 make.height.equalTo(68);
-                make.top.equalTo(view.prev).offset(-0.6);
-                make.left.right.inset(-0.6);
+                make.top.equalTo(view.prev).offset(-1);
+                make.left.right.inset(-1);
               }
             },
             {
               type: "view",
               props: {
-                borderWidth: 0.6,
+                borderWidth: 0.5,
                 borderColor: themeColor[11]
               },
               layout: (make, view) => make.edges.equalTo(view.prev),
@@ -2232,7 +2240,9 @@ const rewardView = {
                       if (success) {
                         toast($("window"), "checkmark.circle.fill", colors[26], "二维码已保存到相册，将自动跳转至微信", 3);
                         await $wait(3);
-                        $app.openURL("weixin://scanqrcode");
+                       const openWeChat = $app.openURL("weixin://scanqrcode");
+                       await $wait(0.3);
+                       if (!openWeChat) toast($("window"), "xmark.circle.fill", colors[14], "无法打开微信");
                       }
                     }
                   });

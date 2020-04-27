@@ -74,7 +74,7 @@ const getData = async (object, value, url) => {
       $device.taptic(1);
     } else if (!data && (value > 1 || onlyURL)) {
       const statusCode = resp.response.statusCode;
-      const message = /^20\d{1}$/i.test(statusCode) ? `不是正确的 ${/\.m3u$/i.test(url) ? "M3U" : /\.json$/i.test(url) ? "JSON" : "TXT"} 订阅格式` : /^50\d{1}$/i.test(statusCode) ? `${statusCode} 服务器出错，请稍后再试` : `${statusCode} 无法读取该订阅`;
+      const message = /^2\d{2}$/i.test(statusCode) ? `不是正确的 ${/\.m3u$/i.test(url) ? "M3U" : /\.json$/i.test(url) ? "JSON" : "TXT"} 订阅格式` : /^5\d{2}$/i.test(statusCode) ? `${statusCode} 服务器出错，请稍后再试` : `${statusCode} 无法访问该订阅地址`;
       toast($("window"), "xmark.circle.fill", colors[14], message);
       $device.taptic(1);
       await $wait(0.15);
@@ -198,10 +198,7 @@ const prompt = (title, text, placeholder, object) => {
                   handler: sender => {
                     sender.focus();
                     $("blur[9]").relayout();
-                    $("blur[9]").updateLayout(make => {
-                      const y = $ui.window.center.y / 3;
-                      make.centerY.equalTo(-y);
-                    });
+                    $("blur[9]").updateLayout(make => make.centerY.equalTo(-$ui.window.center.y / 3));
                     $ui.animate({
                       duration: 0.3,
                       animation: () => $("blur[9]").relayout(),
@@ -217,7 +214,7 @@ const prompt = (title, text, placeholder, object) => {
             type: "stack",
             layout: make => {
               make.height.equalTo(48);
-              make.left.right.bottom.inset(-0.2);
+              make.left.right.bottom.inset(-1);
             },
             props: {
               spacing: 0,
@@ -232,8 +229,8 @@ const prompt = (title, text, placeholder, object) => {
                       text: "取消",
                       align: $align.center,
                       cornerRadius: 0,
-                      borderWidth: 0.2,
-                      borderColor: $color("gray"),
+                      borderWidth: 0.5,
+                      borderColor: themeColor[11],
                       textColor: colors[9],
                       font: $font("bold", 18)
                     },
@@ -267,8 +264,8 @@ const prompt = (title, text, placeholder, object) => {
                       text: "完成",
                       align: $align.center,
                       cornerRadius: 0,
-                      borderWidth: 0.2,
-                      borderColor: $color("gray"),
+                      borderWidth: 0.5,
+                      borderColor: themeColor[11],
                       textColor: colors[9],
                       font: $font("bold", 18)
                     },
@@ -295,10 +292,9 @@ const prompt = (title, text, placeholder, object) => {
     duration: 0.3,
     animation: () => $("view[6]").alpha = 1,
     completion: () => {
-      const y = $ui.window.center.y / 3;
       $("input[1]").focus();
       $("blur[9]").relayout();
-      $("blur[9]").updateLayout(make => make.centerY.equalTo(-y));
+      $("blur[9]").updateLayout(make => make.centerY.equalTo(-$ui.window.center.y / 3));
       $ui.animate({
         duration: 0.3,
         animation: () => $("blur[9]").relayout(),

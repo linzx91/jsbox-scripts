@@ -25,9 +25,9 @@ const apps = [
 const player = async (index, appName, scheme) => {
   const data = !$("view[3]").hidden ? await search($("input[0]").text) : !$("view[2]").hidden ? await getData(1, 0) : $cache.get("channels");
   const src = !$("view[1]").hidden && $cache.get("source").id !== "feed" ? restore(data[index.item].url) : data[index.item].url;
-  $app.openURL(scheme + src);
-  await $wait(1);
-  if ($app.env === $env.app) toast($("window"), "xmark.circle.fill", colors[14], "无法打开 " + appName, 2);
+  const openApp = $app.openURL(scheme + src);
+  await $wait(0.3);
+  if (!openApp) toast($("window"), "xmark.circle.fill", colors[14], "无法打开 " + appName);
   $device.taptic(1);
   await $wait(0.15);
   $device.taptic(1);
