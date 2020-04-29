@@ -31,20 +31,7 @@ const getData = async (object, value, url) => {
       const isObject = typeof resp.data === "object";
       const isM3UFormat = /^https?:\/\/.+\.m3u$/i.test(url) && /(#EXTM3U[\s\S]*?)#EXTINF/g.test(resp.data);
       const isTxtFormat = /^https?:\/\/.+\.txt$/i.test(url) && /.+,(\s+)?https?:\/\//i.test(resp.data);
-      const cycle = (name, url, array = []) => {
-        name.forEach((name, index) => {
-          url.forEach((url, tindex) => {
-            if (index === tindex) {
-              const object = {
-                name: name,
-                url: url
-              };
-              array.push(object);
-            }
-          });
-        });
-        return array.length ? array : null;
-      };
+      const cycle = (name, url) => name.length === url.length ? name.map((item, index) => {return {name: name[index], url: url[index]}}) : null;
       if (isString && isM3UFormat) {
         const array = resp.data.replace(/^([\s\S]*?)(?=#EXTINF)|#EXTINF.+,(\s+)?|#EXTVLCOPT.+\n|(\s|\r)+(?=(\n|$))/ig, "").split("\n");
         const name = [];
@@ -72,14 +59,14 @@ const getData = async (object, value, url) => {
       $device.taptic(1);
       await $wait(0.15);
       $device.taptic(1);
-    } else if (!data && (value > 1 || onlyURL)) {
+    } else if (!data && (onlyURL || value > 1)) {
       const statusCode = resp.response.statusCode;
       const message = /^2\d{2}$/i.test(statusCode) ? `不是正确的 ${/\.m3u$/i.test(url) ? "M3U" : /\.json$/i.test(url) ? "JSON" : "TXT"} 订阅格式` : /^5\d{2}$/i.test(statusCode) ? `${statusCode} 服务器出错，请稍后再试` : `${statusCode} 无法访问该订阅地址`;
       toast($("window"), "xmark.circle.fill", colors[14], message);
       $device.taptic(1);
       await $wait(0.15);
       $device.taptic(1);
-    } else if (value < 2) {
+    } else if (!onlyURL && value < 2) {
       $cache.set("channels", data);
       toast($("window"), "checkmark.circle.fill", colors[26], `目前一共收录了 ${data.length} ${source.id === "live" ? "个直播源" : "部影片"}`);
     }

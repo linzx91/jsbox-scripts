@@ -1749,7 +1749,10 @@ const feedList = {
                             }),
                             path: "shared://tvbox/feeds.json"
                           });
-                          if (url === source.url) $("matrix[0]").data = await getFeedData(1, indexPath.item, url);
+                          if (url === source.url) {
+                            $("matrix[0]").data = await getFeedData(1, indexPath.item, url);
+                            $cache.set("channels", newData);
+                          }
                           spinner.stop();
                           lottie(newData ? "checkmark" : "xmark");
                           if (newData) toast($("window"), "checkmark.circle.fill", colors[26], `更新成功，共计 ${newData.length} 个播放源`);
@@ -1852,9 +1855,8 @@ const feedList = {
                 alpha: 0
               },
               layout: (make, view) => {
-                make.height.equalTo(68);
-                make.top.equalTo(view.prev).offset(-1);
-                make.left.right.inset(-1);
+                make.height.equalTo(69);
+                make.top.left.right.inset(-1);
               }
             },
             {
