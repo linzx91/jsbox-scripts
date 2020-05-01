@@ -1888,7 +1888,7 @@ const feedList = {
                       layout: make => {
                         make.size.equalTo($size(24, 24));
                         make.left.centerY.inset(0);
-                      },
+                      }
                     },
                     {
                       type: "label",
