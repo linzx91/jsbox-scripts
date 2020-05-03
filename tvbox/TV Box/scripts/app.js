@@ -48,7 +48,6 @@ const navBarButtons = (symbol, object) => {
                 $("view[3]").hidden = true;
                 $("blur[4]").hidden = true;
                 $("view[9]").hidden = false;
-                $("input[0]").text = "";
                 $("matrix[2]").data = [];
               }
             });
@@ -185,7 +184,6 @@ const navBarButtons = (symbol, object) => {
                   $("view[3]").hidden = true;
                   $("blur[4]").hidden = true;
                   $("view[9]").hidden = false;
-                  $("input[0]").text = "";
                   $("matrix[2]").data = [];
                 }
               });
@@ -569,7 +567,6 @@ const navigationBar = {
                       $("view[3]").hidden = true;
                       $("blur[4]").hidden = true;
                       $("view[9]").hidden = false;
-                      $("input[0]").text = "";
                       $("matrix[2]").data = [];
                     }
                   });
@@ -714,6 +711,7 @@ const searchBarView = {
             textColor: themeColor[3],
             bgcolor: $color("clear"),
             placeholder: "搜索",
+            clearsOnBeginEditing: true,
             accessoryView: {}
           },
           layout: (make, view) => {
@@ -774,7 +772,6 @@ const searchBarView = {
                   $("view[3]").hidden = true;
                   $("blur[4]").hidden = true;
                   $("view[9]").hidden = false;
-                  $("input[0]").text = "";
                   $("matrix[2]").data = [];
                 }
               });
@@ -917,7 +914,6 @@ const searchMatrix = {
               $("view[3]").hidden = true;
               $("blur[4]").hidden = true;
               $("view[9]").hidden = false;
-              $("input[0]").text = "";
               sender.data = [];
               !$cache.get("guide_play") ? popupGuide("guide_play", $("view[7]"), "如果无法播放，可尝试点击这里", colors[26], colors[2], "down") : null;
               if ($device.networkType === 2) toast($("window"), "exclamationmark.circle.fill", colors[22], "非Wi-Fi环境，请注意流量消耗", 5);
@@ -1035,7 +1031,6 @@ const videoTitleBar = {
                     $("view[3]").hidden = true;
                     $("blur[4]").hidden = true;
                     $("view[9]").hidden = false;
-                    $("input[0]").text = "";
                     $("matrix[2]").data = [];
                   }
                 });
@@ -1492,7 +1487,6 @@ const favoritesView = {
                             $("view[3]").hidden = true;
                             $("blur[4]").hidden = true;
                             $("view[9]").hidden = false;
-                            $("input[0]").text = "";
                             $("matrix[2]").data = [];
                           }
                         });
