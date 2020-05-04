@@ -4,60 +4,60 @@
   "type": "episode",
   "channels": [
     {
-      "name": "第01集",
-      "url": "https://youku.cdn2-okzy.com/20200422/9286_6dd95d07/index.m3u8"
+      "name": "第1集",
+      "url": "https://cn6.18787000118.com/hls/20200422/35b2d649fc0babc934adc6ae938ae311/index.m3u8"
     },
     {
-      "name": "第02集",
-      "url": "https://youku.cdn2-okzy.com/20200422/9287_8202e497/index.m3u8"
+      "name": "第2集",
+      "url": "https://cn6.18787000118.com/hls/20200422/712c8c31081a3cc811f2d707101d32b2/index.m3u8"
     },
     {
-      "name": "第03集",
-      "url": "https://youku.cdn2-okzy.com/20200422/9288_776b9f31/index.m3u8"
+      "name": "第3集",
+      "url": "https://cn6.18787000118.com/hls/20200422/c19679c4ba7971a1e8ee2f5102fa28f9/index.m3u8"
     },
     {
-      "name": "第04集",
-      "url": "https://youku.cdn2-okzy.com/20200422/9289_5b805e49/index.m3u8"
+      "name": "第4集",
+      "url": "https://cn6.18787000118.com/hls/20200422/073f61f70e271fd3219e9bea94c7796e/index.m3u8"
     },
     {
-      "name": "第05集",
-      "url": "https://youku.cdn2-okzy.com/20200422/9290_769acade/index.m3u8"
+      "name": "第5集",
+      "url": "https://cn6.18787000118.com/hls/20200422/02b4cd42b8ddaf0686054fe4c9b4be9c/index.m3u8"
     },
     {
-      "name": "第06集",
-      "url": "https://youku.cdn2-okzy.com/20200422/9291_0ae144ed/index.m3u8"
+      "name": "第6集",
+      "url": "https://cn6.18787000118.com/hls/20200422/b30ded2ae90fad5b86289196a10c07af/index.m3u8"
     },
     {
-      "name": "第07集",
-      "url": "https://youku.cdn2-okzy.com/20200422/9292_fc79fe89/index.m3u8"
+      "name": "第7集",
+      "url": "https://cn1.18787000118.com/hls/20200422/36f6f21098eef1ed37201dfd7d88014c/index.m3u8"
     },
     {
-      "name": "第08集",
-      "url": "https://youku.cdn2-okzy.com/20200422/9293_98c5209b/index.m3u8"
+      "name": "第8集",
+      "url": "https://cn6.18787000118.com/hls/20200424/db556a0864b798ca53e0e35131d59800/index.m3u8"
     },
     {
-      "name": "第09集",
-      "url": "https://youku.cdn2-okzy.com/20200428/9390_666052f8/index.m3u8"
+      "name": "第9集",
+      "url": "https://cn1.18787000118.com/hls/20200429/653b81fc888a99f5d44e1c761dbc3d9d/index.m3u8"
     },
     {
       "name": "第10集",
-      "url": "https://youku.cdn2-okzy.com/20200428/9391_42f19508/index.m3u8"
+      "url": "https://cn1.18787000118.com/hls/20200429/78148f966124e72c849fd3e086369c62/index.m3u8"
     },
     {
       "name": "第11集",
-      "url": "https://youku.cdn2-okzy.com/20200428/9392_86aad63b/index.m3u8"
+      "url": "https://cn1.18787000118.com/hls/20200429/a85d73f28127edf8a2c24e421feea51b/index.m3u8"
     },
     {
       "name": "第12集",
-      "url": "https://youku.cdn2-okzy.com/20200430/9408_18dfc1fe/index.m3u8"
+      "url": "https://cn6.18787000118.com/hls/20200430/cb1bc2a5d50b0084b260e09f656c189b/index.m3u8"
     },
     {
       "name": "第13集",
-      "url": "https://youku.cdn2-okzy.com/20200430/9409_279fbfa2/index.m3u8"
+      "url": "https://cn6.18787000118.com/hls/20200430/34e50e0885280be912e01baa8c99413d/index.m3u8"
     },
     {
       "name": "第14集",
-      "url": "https://youku.cdn2-okzy.com/20200430/9410_ed678086/index.m3u8"
+      "url": "https://cn6.18787000118.com/hls/20200430/baf4eccf1aa121c24d49d09c89ea81f5/index.m3u8"
     }
   ]
 }
