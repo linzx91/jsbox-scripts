@@ -112,11 +112,13 @@ if (theme === "darkMode") {
   isDarkTheme = $device.isDarkMode;
 }
 
+const keyWindow = $objc("UIApplication").invoke("sharedApplication.keyWindow").jsValue();
+
 class Spinner {
   constructor(sender, id, style, text) {
-    this.sender = typeof sender === "object" ? sender : $("window");
+    this.sender = typeof sender === "object" ? sender : keyWindow;
     this.id = id ? id : "spinner[0]";
-    this.style = typeof style === "number" ? style : this.sender === $("window") ? 0 : 1;
+    this.style = typeof style === "number" ? style : this.sender === keyWindow ? 0 : 1;
     this.text = text ? text : typeof sender === "string" ? sender : "请稍等";
     this.size = $text.sizeThatFits({
       text: this.text,
@@ -273,7 +275,7 @@ const toast = (sender, symbol, color, text, duration) => {
   const topInset = sender.frame.height * 0.11;
   const textSize = $text.sizeThatFits({
     text: text,
-    width: sender.frame.width - 88,
+    width: sender.frame.width - 80,
     font: $font("bold", 16)
   });
   if (!duration) duration = text.length * 0.3;
@@ -289,7 +291,7 @@ const toast = (sender, symbol, color, text, duration) => {
       userInteractionEnabled: false
     },
     layout: (make, view) => {
-      make.width.equalTo(textSize.width + 56);
+      make.width.equalTo(textSize.width + 48);
       make.height.equalTo(36);
       make.top.inset(-36);
       make.centerX.equalTo(view.super);
@@ -299,7 +301,7 @@ const toast = (sender, symbol, color, text, duration) => {
         type: "view",
         layout: (make, view) => {
           make.size.equalTo($size(20, 20));
-          make.left.inset(12);
+          make.left.inset(10);
           make.centerY.equalTo(view.super);
         },
         views: [
@@ -325,8 +327,9 @@ const toast = (sender, symbol, color, text, duration) => {
         },
         layout: (make, view) => {
           make.height.equalTo(view.super);
-          make.left.equalTo(view.prev.right);
-          make.right.centerY.inset(0);
+          make.left.equalTo(view.prev.right).offset(8);
+          make.right.inset(10);
+          make.centerY.inset(0);
         }
       }
     ]
@@ -339,7 +342,7 @@ const toast = (sender, symbol, color, text, duration) => {
     animation: () => $("blur[2]").relayout(),
     completion: async () => {
       await $wait(duration);
-      if ($("blur[2]").info !== timestamp) return;
+      if (!$("blur[2]") || $("blur[2]").info !== timestamp) return;
       $("blur[2]").relayout();
       $("blur[2]").updateLayout(make => make.top.inset(-36));
       $ui.animate({
@@ -352,11 +355,11 @@ const toast = (sender, symbol, color, text, duration) => {
 };
 
 const lottie = async (object, start, end, loop = false) => {
-  object = JSON.parse($data({path: `/assets/${object}.json`}).string);
+  object = JSON.parse($file.read("/assets/" + object + ".json").string);
   start === undefined ? (start = 0, end = object.op) : start === true ? ((start = 0, end = object.op), loop = true) : end === true ? ((end = start, start = 0), loop = true) : end === undefined ? (end = start, start = 0) : null;
   const timestamp = new Date().valueOf();
   if ($("view[0]")) $("view[0]").remove();
-  $("window").add({
+  keyWindow.add({
     type: "view",
     props: {
       id: "view[0]",
@@ -411,4 +414,4 @@ const lottie = async (object, start, end, loop = false) => {
   });
 };
 
-module.exports = {colors, theme, isDarkTheme, themeColor, Spinner, popupGuide, toast, lottie}
+module.exports = {colors, theme, isDarkTheme, themeColor, keyWindow, Spinner, popupGuide, toast, lottie}

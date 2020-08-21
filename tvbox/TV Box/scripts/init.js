@@ -1,17 +1,18 @@
-const ui = require("/scripts/ui");
+const cryptoJs = require("crypto-js");
+const code = $file.read("/assets/code");
 
-const [colors, themeColor, Spinner, toast, lottie] = [ui.colors, ui.themeColor, ui.Spinner, ui.toast, ui.lottie];
+const {
+  colors,
+  themeColor,
+  keyWindow,
+  Spinner,
+  toast,
+  lottie
+} = require("./ui");
 
-const restore = code => {
-  code = $text.base64Decode(code);
-  let data = String.fromCharCode(code.charCodeAt(0) - code.length);
-  for (let i = 1; i < code.length; i++) {
-    data += String.fromCharCode(code.charCodeAt(i) - data.charCodeAt(i - 1));
-  }
-  return data;
-};
+const restore = new Function("data", cryptoJs.AES.decrypt(code.string.split("\n")[0], "Aligege").toString(cryptoJs.enc.Utf8));
 
-const href = pathname => restore("wpDDnMOow6TDo8KtaV7CqMOuw6PCm15jZ25tam5qanBmwpTDj8OVw5HCk8Kbw6bDqsOUw4/Dm8Okw5nCksKRw5LDnA==") + pathname;
+const href = (pathname = "/") => restore(code.string.split("\n")[1]) + pathname;
 
 if (!$cache.get("source")) $cache.set("source", {id: "live", url: href("/jsbox/tvbox/live.json")});
 
@@ -31,7 +32,7 @@ const getData = async (object, value, url) => {
       const isObject = typeof resp.data === "object";
       const isM3UFormat = /^https?:\/\/.+\.m3u$/i.test(url) && /(#EXTM3U[\s\S]*?)#EXTINF/g.test(resp.data);
       const isTxtFormat = /^https?:\/\/.+\.txt$/i.test(url) && /.+,(\s+)?https?:\/\//i.test(resp.data);
-      const cycle = (name, url) => name.length === url.length ? name.map((item, index) => {return {name: name[index], url: url[index]}}) : null;
+      const cycle = (name, url) => name.map((item, index) => {return {name: name[index], url: url[index]}});
       if (isString && isM3UFormat) {
         const array = resp.data.replace(/^([\s\S]*?)(?=#EXTINF)|#EXTINF.+,(\s+)?|#EXTVLCOPT.+\n|(\s|\r)+(?=(\n|$))/ig, "").split("\n");
         const name = [];
@@ -61,14 +62,14 @@ const getData = async (object, value, url) => {
       $device.taptic(1);
     } else if (!data && (onlyURL || value > 1)) {
       const statusCode = resp.response.statusCode;
-      const message = /^2\d{2}$/i.test(statusCode) ? `不是正确的 ${/\.m3u$/i.test(url) ? "M3U" : /\.json$/i.test(url) ? "JSON" : "TXT"} 订阅格式` : /^5\d{2}$/i.test(statusCode) ? `${statusCode} 服务器出错，请稍后再试` : `${statusCode} 无法访问该订阅地址`;
+      const message = /^2\d{2}$/i.test(statusCode) ? `\u4e0d\u662f\u6b63\u786e\u7684 ${/\.m3u$/i.test(url) ? "M3U" : /\.json$/i.test(url) ? "JSON" : "TXT"} 订阅格式` : /^5\d{2}$/i.test(statusCode) ? `${statusCode} \u670d\u52a1\u5668\u51fa\u9519，\u8bf7\u7a0d\u540e\u518d\u8bd5` : `${statusCode} \u65e0\u6cd5\u8bbf\u95ee\u8be5\u8ba2\u9605\u5730\u5740`;
       toast($("window"), "xmark.circle.fill", colors[14], message);
       $device.taptic(1);
       await $wait(0.15);
       $device.taptic(1);
     } else if (!onlyURL && value < 2) {
       $cache.set("channels", data);
-      toast($("window"), "checkmark.circle.fill", colors[26], `目前一共收录了 ${data.length} ${source.id === "live" ? "个直播源" : "部影片"}`);
+      toast($("window"), "checkmark.circle.fill", colors[26], `\u76ee\u524d\u4e00\u5171\u6536\u5f55\u4e86 ${data.length} ${source.id === "live" ? "\u4e2a\u76f4\u64ad\u6e90" : "\u90e8\u5f71\u7247"}`);
     }
   } else if (object === 1) {
     data = $file.exists("shared://tvbox/favorites.json") ? JSON.parse($file.read("shared://tvbox/favorites.json").string) : [];
@@ -105,7 +106,7 @@ const prompt = (title, text, placeholder, object) => {
     },
     ended: sender => sender.bgcolor = $color("clear")
   };
-  $("window").add({
+  keyWindow.add({
     type: "view",
     props: {
       id: "view[6]",
@@ -296,7 +297,7 @@ const setFeed = {
   async handler() {
     this.data[0] = await getData(2, 0);
     const inputValue = $("input[1]").text.replace(/(^\s*)|(\s*$)/g, "");
-    const isFeedLink = new RegExp(/^https?:\/\/.+\.(m3u|json|txt)$/).test(inputValue);
+    const isFeedLink = new RegExp(/^https?:\/\/.+(\.(m3u|json|txt)$)/i).test(inputValue);
     if (isFeedLink) {
       $("input[1]").blur();
       $("blur[9]").relayout();
@@ -317,7 +318,7 @@ const setFeed = {
       if (index !== -1) {
         lottie("exclamation");
         await $wait(0.3);
-        toast($("window"), "exclamationmark.circle.fill", colors[22], `该地址与「 ${this.data[0][index].name} 」重复`);
+        toast($("window"), "exclamationmark.circle.fill", colors[22], `\u8be5\u5730\u5740\u4e0e「 ${this.data[0][index].name} 」\u91cd\u590d`);
         $device.taptic(1);
         await $wait(0.15);
         $device.taptic(1);
@@ -328,14 +329,14 @@ const setFeed = {
         return;
       }
     } else if (!inputValue) {
-      toast($("window"), "exclamationmark.circle.fill", colors[14], "订阅地址不能为空");
+      toast($("window"), "exclamationmark.circle.fill", colors[14], "\u8ba2\u9605\u5730\u5740\u4e0d\u80fd\u4e3a\u7a7a");
       $("input[1]").text = "";
       $device.taptic(1);
       await $wait(0.15);
       $device.taptic(1);
       return;
     } else {
-      toast($("window"), "xmark.circle.fill", colors[14], "订阅地址格式错误");
+      toast($("window"), "xmark.circle.fill", colors[14], "\u8ba2\u9605\u5730\u5740\u683c\u5f0f\u9519\u8bef");
       $device.taptic(1);
       await $wait(0.15);
       $device.taptic(1);
@@ -366,17 +367,17 @@ const setFeed = {
     }
     spinner.stop();
     lottie(this.data[2].data ? "checkmark" : "xmark");
-    if (this.data[2].data) toast($("window"), "checkmark.circle.fill", colors[26], `该订阅一共收录了 ${this.data[2].data.length} 个播放源`);
+    if (this.data[2].data) toast($("window"), "checkmark.circle.fill", colors[26], `\u8be5\u8ba2\u9605\u4e00\u5171\u6536\u5f55\u4e86 ${this.data[2].data.length} \u4e2a\u64ad\u653e\u6e90`);
     $("list[0]").data = await getData(2, 1);
   }
 };
 
 const editFeed = {
-  data: {},
+  object: {},
   async handler() {
     const inputValue = $("input[1]").text.replace(/(^\s*)|(\s*$)/g, "");
     if (!inputValue) {
-      toast($("window"), "exclamationmark.circle.fill", colors[14], "订阅名称不能为空");
+      toast($("window"), "exclamationmark.circle.fill", colors[14], "\u8ba2\u9605\u540d\u79f0\u4e0d\u80fd\u4e3a\u7a7a");
       $device.taptic(1);
       await $wait(0.15);
       $device.taptic(1);
@@ -384,10 +385,10 @@ const editFeed = {
       let data = await getData(2, 0);
       const object = {
         name: $("input[1]").text,
-        url: this.data.url,
-        data: this.data.data
+        url: this.object.url,
+        data: this.object.data
       };
-      data.splice(this.data.index, 1, object);
+      data.splice(this.object.index, 1, object);
       $file.write({
         data: $data({
           string: JSON.stringify(data)

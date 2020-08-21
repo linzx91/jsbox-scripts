@@ -1,7 +1,5 @@
-const ui = require("/scripts/ui");
-const init = require("/scripts/init");
-
-const [colors, toast, restore, getData, search] = [ui.colors, ui.toast, init.restore, init.getData, init.search];
+const { colors, toast } = require("./ui");
+const { restore, getData, search } = require("./init");
 
 const apps = [
   {

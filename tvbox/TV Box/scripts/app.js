@@ -1,12 +1,35 @@
-const ui = require("/scripts/ui");
-const init = require("/scripts/init");
-const player = require("/scripts/player");
+const {
+  colors,
+  theme,
+  themeColor,
+  Spinner,
+  popupGuide,
+  toast,
+  lottie
+} = require("./ui");
+
+const {
+  restore,
+  href,
+  getData,
+  getFeedData,
+  search,
+  prompt,
+  setFeed,
+  editFeed,
+  feedViewControl,
+  moveArray
+} = require("./init");
+
+const {
+  apps,
+  play,
+  options
+} = require("./player");
 
 const [isIpad, isIpadPro, isIphoneX] = [$device.isIpad, $device.isIpadPro, $device.isIphoneX];
 
-const [colors, theme, themeColor, Spinner, popupGuide, toast, lottie, restore, href, getData, getFeedData, search, prompt, setFeed, editFeed, feedViewControl, moveArray, apps, play, options] = [ui.colors, ui.theme, ui.themeColor, ui.Spinner, ui.popupGuide, ui.toast, ui.lottie, init.restore, init.href, init.getData, init.getFeedData, init.search, init.prompt, init.setFeed, init.editFeed, init.feedViewControl, init.moveArray, player.apps, player.play, player.options];
-
-let isDarkTheme = ui.isDarkTheme;
+let { isDarkTheme } = require("./ui");
 let source = $cache.get("source");
 
 const navBarButtons = (symbol, object) => {
@@ -48,6 +71,7 @@ const navBarButtons = (symbol, object) => {
                 $("view[3]").hidden = true;
                 $("blur[4]").hidden = true;
                 $("view[9]").hidden = false;
+                $("input[0]").text = "";
                 $("matrix[2]").data = [];
               }
             });
@@ -184,6 +208,7 @@ const navBarButtons = (symbol, object) => {
                   $("view[3]").hidden = true;
                   $("blur[4]").hidden = true;
                   $("view[9]").hidden = false;
+                  $("input[0]").text = "";
                   $("matrix[2]").data = [];
                 }
               });
@@ -209,16 +234,16 @@ const setMainMenu = key => {
   let text, symbol, id, url;
   let [borderWidth, borderColor, textColor, tintColor, bgColor, select] = [0, $color("clear"), themeColor[3], themeColor[3], themeColor[7], true];
   if (key === "live") {
-    [text, symbol, id, url] = ["电视直播", "tv", "live", href("/jsbox/tvbox/live.json")];
+    [text, symbol, id, url] = ["\u7535\u89c6\u76f4\u64ad", "tv", "live", href("/jsbox/tvbox/live.json")];
     if (source.id === "live") [textColor, tintColor, bgColor, select] = [colors[2], colors[2], colors[9], false];
   } else if (key === "movie") {
-    [text, symbol, id, url] = ["影视电影", "film", "movie", href("/jsbox/tvbox/movie.json")];
+    [text, symbol, id, url] = ["\u5f71\u89c6\u7535\u5f71", "film", "movie", href("/jsbox/tvbox/movie.json")];
     if (source.id === "movie") [textColor, tintColor, bgColor, select] = [colors[2], colors[2], colors[9], false];
   } else if (key === "feed") {
-    [text, symbol, id] = ["订阅列表", "rectangle.and.paperclip", "feed"];
+    [text, symbol, id] = ["\u8ba2\u9605\u5217\u8868", "rectangle.and.paperclip", "feed"];
     if (source.id === "feed") [textColor, tintColor, bgColor] = [colors[2], colors[2], colors[9]];
   } else if (key === "reward") {
-    [text, symbol, borderWidth, borderColor] = ["赞赏作者", "hand.thumbsup", 1, colors[29]];
+    [text, symbol, borderWidth, borderColor] = ["\u8d5e\u8d4f\u4f5c\u8005", "hand.thumbsup", 1, colors[29]];
   }
   return {
     type: "button",
@@ -354,13 +379,13 @@ const setThemeMenu = key => {
   let text, symbol, cache;
   let [textColor, tintColor, bgColor, select] = [themeColor[3], themeColor[3], themeColor[7], true];
   if (key === "lightMode") {
-    [text, symbol, cache] = ["始终浅色", "sun.min.fill", "lightMode"];
+    [text, symbol, cache] = ["\u59cb\u7ec8\u6d45\u8272", "sun.min.fill", "lightMode"];
     if (theme === "lightMode") [textColor, tintColor, bgColor, select] = [colors[2], colors[2], colors[9], false];
   } else if (key === "darkMode") {
-    [text, symbol, cache] = ["始终深色", "moon.circle", "darkMode"];
+    [text, symbol, cache] = ["\u59cb\u7ec8\u6df1\u8272", "moon.circle", "darkMode"];
     if (theme === "darkMode") [textColor, tintColor, bgColor, select] = [colors[2], colors[2], colors[9], false];
   } else if (key === "autoMode") {
-    [text, symbol, cache] = ["跟随系统", "circle.lefthalf.fill", "autoMode"];
+    [text, symbol, cache] = ["\u8ddf\u968f\u7cfb\u7edf", "circle.lefthalf.fill", "autoMode"];
     if (theme === "autoMode") [textColor, tintColor, bgColor, select] = [colors[2], colors[2], colors[9], false];
   }
   return {
@@ -567,6 +592,7 @@ const navigationBar = {
                       $("view[3]").hidden = true;
                       $("blur[4]").hidden = true;
                       $("view[9]").hidden = false;
+                      $("input[0]").text = "";
                       $("matrix[2]").data = [];
                     }
                   });
@@ -711,7 +737,6 @@ const searchBarView = {
             textColor: themeColor[3],
             bgcolor: $color("clear"),
             placeholder: "搜索",
-            clearsOnBeginEditing: true,
             accessoryView: {}
           },
           layout: (make, view) => {
@@ -772,6 +797,7 @@ const searchBarView = {
                   $("view[3]").hidden = true;
                   $("blur[4]").hidden = true;
                   $("view[9]").hidden = false;
+                  $("input[0]").text = "";
                   $("matrix[2]").data = [];
                 }
               });
@@ -873,9 +899,8 @@ const searchMatrix = {
           const data = await search($("input[0]").text);
           const name = data[indexPath.item].name;
           const src = !$("view[1]").hidden && source.id !== "feed" ? restore(data[indexPath.item].url) : data[indexPath.item].url;
-          const windowSize = $ui.window.size;
           $("video[0]").relayout();
-          $("video[0]").updateLayout(make => make.height.equalTo(windowSize.width >= 500 && windowSize.height >= 1e3 ? 320 : 240));
+          $("video[0]").updateLayout((make, view) => make.height.equalTo(view.frame.width / 1.777777777777778));
           $ui.animate({
             duration: 0.4,
             animation: () => $("video[0]").relayout()
@@ -900,25 +925,9 @@ const searchMatrix = {
           });
           await $wait(0.3);
           $("video[0]").play();
-          $("view[3]").relayout();
-          $("view[3]").updateLayout(make => make.top.inset(-36));
-          $("input[0]").blur();
-          $ui.animate({
-            duration: 0.3,
-            animation: () => {
-              $("view[3]").alpha = 0;
-              $("view[3]").relayout();
-              $("blur[4]").alpha = 0;
-            },
-            completion: () => {
-              $("view[3]").hidden = true;
-              $("blur[4]").hidden = true;
-              $("view[9]").hidden = false;
-              sender.data = [];
-              !$cache.get("guide_play") ? popupGuide("guide_play", $("view[7]"), "如果无法播放，可尝试点击这里", colors[26], colors[2], "down") : null;
-              if ($device.networkType === 2) toast($("window"), "exclamationmark.circle.fill", colors[22], "非Wi-Fi环境，请注意流量消耗", 5);
-            }
-          });
+          await $wait(0.3);
+          !$cache.get("guide_play") ? popupGuide("guide_play", $("view[7]"), "如果无法播放，可尝试点击这里", colors[26], colors[2], "down") : null;
+          if ($device.networkType === 2) toast($("window"), "exclamationmark.circle.fill", colors[22], "非Wi-Fi环境，请注意流量消耗", 5);
         },
         didEndDragging: sender => {
           if (sender.data.length) $("input[0]").blur();
@@ -940,9 +949,8 @@ const playerView = {
   },
   events: {
     ready: sender => {
-      const windowSize = $ui.window.size;
       sender.relayout();
-      sender.updateLayout(make => make.height.equalTo(windowSize.width >= 500 && windowSize.height >= 1e3 ? 320 : 240));
+      sender.updateLayout((make, view) => make.height.equalTo(view.frame.width / 1.777777777777778));
       $ui.animate({
         duration: 0.4,
         animation: () => sender.relayout()
@@ -1031,6 +1039,7 @@ const videoTitleBar = {
                     $("view[3]").hidden = true;
                     $("blur[4]").hidden = true;
                     $("view[9]").hidden = false;
+                    $("input[0]").text = "";
                     $("matrix[2]").data = [];
                   }
                 });
@@ -1170,9 +1179,8 @@ const mainMatrixView = {
             });
           }
           this.itemLocation = parseFloat((sender.contentOffset.y / 10).toFixed(1));
-          const windowSize = $ui.window.size;
           $("video[0]").relayout();
-          $("video[0]").updateLayout(make => make.height.equalTo(windowSize.width >= 500 && windowSize.height >= 1e3 ? 320 : 240));
+          $("video[0]").updateLayout((make, view) => make.height.equalTo(view.frame.width / 1.777777777777778));
           $ui.animate({
             duration: 0.4,
             animation: () => $("video[0]").relayout()
@@ -1328,9 +1336,8 @@ const favoritesView = {
                   completion: () => $("blur[0]").hidden = true
                 });
               }
-              const windowSize = $ui.window.size;
               $("video[0]").relayout();
-              $("video[0]").updateLayout(make => make.height.equalTo(windowSize.width >= 500 && windowSize.height >= 1e3 ? 320 : 240));
+              $("video[0]").updateLayout((make, view) => make.height.equalTo(view.frame.width / 1.777777777777778));
               $ui.animate({
                 duration: 0.4,
                 animation: () => $("video[0]").relayout()
@@ -1487,6 +1494,7 @@ const favoritesView = {
                             $("view[3]").hidden = true;
                             $("blur[4]").hidden = true;
                             $("view[9]").hidden = false;
+                            $("input[0]").text = "";
                             $("matrix[2]").data = [];
                           }
                         });
@@ -1606,15 +1614,14 @@ const feedList = {
         showsVerticalIndicator: false,
         pagingEnabled: true,
         cornerRadius: 10,
-        smoothCorners: true
+        smoothCorners: true,
+        bounces: false
       },
       events: {
         didScroll: sender => {
           const scrollOffset = parseFloat((sender.contentOffset.y / (sender.frame.height)).toFixed(2));
-          const scrollToBottom = sender.contentOffset.y > sender.frame.height;
           $("view[5]").alpha = scrollOffset <= 0 ? 0 : scrollOffset >= 1 ? 1 : scrollOffset;
           $("view[4]").hidden = scrollOffset <= 0 ? true : false;
-          sender.alwaysBounceVertical = scrollToBottom ? false : true;
         },
         didEndDecelerating: sender => feedViewControl(sender, 0)
       },
@@ -1717,7 +1724,7 @@ const feedList = {
                         color: colors[5],
                         handler: async (sender, indexPath) => {
                           const data = await getData(2, 0);
-                          editFeed.data = {
+                          editFeed.object = {
                             index: indexPath.item,
                             name: data[indexPath.item].name,
                             url: data[indexPath.item].url,
@@ -2230,11 +2237,34 @@ const rewardView = {
               },
               events: {
                 tapped: () => {
+                  let imageName = [0, 0];
                   $photo.save({
                     data: $("image[0]").data,
                     handler: async success => {
+                      $app.listen({
+                        pause: () => {
+                          $photo.fetch({
+                            count: 1,
+                            format: "data",
+                            handler: images => imageName[0] = !imageName[0] ? images.fileName : 1
+                          });
+                        },
+                        resume: () => {
+                          $photo.fetch({
+                            count: 1,
+                            format: "data",
+                            handler: images => {
+                              imageName[1] = images.fileName;
+                              if (imageName[0] === imageName[1]) $photo.delete({
+                                count: 1,
+                                handler: success => imageName[0] = 1
+                              });
+                            }
+                          });
+                        }
+                      });
                       if (success) {
-                        toast($("window"), "checkmark.circle.fill", colors[26], "二维码已保存到相册，将自动跳转至微信", 3);
+                        toast($("window"), "checkmark.circle.fill", colors[26], "二维码已保存到系统相册，将自动跳转至微信", 3);
                         await $wait(3);
                        const openWeChat = $app.openURL("weixin://scanqrcode");
                        await $wait(0.3);
