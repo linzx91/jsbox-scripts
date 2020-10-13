@@ -1,7 +1,7 @@
 {
-  "version": "1.2.6",
-  "size": 714000,
+  "version": "1.2.7",
+  "size": 599277,
   "url": "https://github.com/linzx91/jsbox-scripts/blob/master/video-collector/app.box?raw=true",
   "name": "影视大全",
-  "description": "修复已知问题。"
+  "description": "•  新增iOS14桌面小组件。\n•  其它优化及修复已知问题。"
 }
