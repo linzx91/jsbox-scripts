@@ -1,7 +1,7 @@
 {
-  "version": "1.2.11",
-  "size": 600773,
+  "version": "1.2.12",
+  "size": 601162,
   "url": "https://github.com/linzx91/jsbox-scripts/blob/master/video-collector/app.box?raw=true",
   "name": "影视大全",
-  "description": "•  优化 iOS14 小组件的UI和UX。\n•  修复bug。"
+  "description": "•  优化 iOS14小组件的布局并修复已知问题。"
 }
