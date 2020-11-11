@@ -1,8 +1,8 @@
 {
-  "version": "1.2.16",
-  "size": 621953,
+  "version": "1.2.17",
+  "size": 622304,
   "url": "https://github.com/linzx91/jsbox-scripts/blob/master/video-collector/app.box?raw=true",
   "name": "影视大全",
   "author": "Aligege",
-  "description": "•  优化并修复已知问题。"
+  "description": "•  修正了一些错误。"
 }
