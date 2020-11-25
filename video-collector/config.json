@@ -1,8 +1,8 @@
 {
-  "version": "1.2.18",
-  "size": 624801,
+  "version": "1.2.19",
+  "size": 650154,
   "url": "https://github.com/linzx91/jsbox-scripts/blob/master/video-collector/app.box?raw=true",
   "name": "影视大全",
   "author": "Aligege",
-  "description": "•  适配新版JSBox小组件“参数”\n•  修正了一些错误。"
+  "description": "•  增强搜索建议。\n•  针对部分可访问性元素的“辅助功能”进行适配和优化。"
 }
