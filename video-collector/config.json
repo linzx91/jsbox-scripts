@@ -1,8 +1,8 @@
 {
-  "version": "1.2.21",
-  "size": 668575,
+  "version": "1.2.22",
+  "size": 686742,
   "url": "https://github.com/linzx91/jsbox-scripts/blob/master/video-collector/app.box?raw=true",
   "name": "影视大全",
   "author": "Aligege",
-  "description": "•  优化部分UI和修复一些小问题\n•  优化辅助功能\n•  选集列表新增了“导出下载地址”的选项"
+  "description": "•  修复了在新版本JSBox（2.14）中出现的部分标签和文字无法正常显示和一些已知问题。\n\n如果有出现“无法链接到服务器”的情况，建议把下面这两个地址添加到香港或者较稳定的代理\nrpg.pic-imges.com\napi.okzy.tv"
 }
