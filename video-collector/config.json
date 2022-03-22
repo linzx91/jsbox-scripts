@@ -1,12 +1,11 @@
 {
-  "version": "1.3.4",
-  "size": 218024,
-  "dataSize": 1025231,
-  "packetSize": 1027164,
-  "minSDKVer": "2.15",
-  "minOSVer": "13.4",
+  "version": "1.3.5",
+  "size": 220926,
+  "packetSize": 397795,
+  "minSDKVer": "2.19",
+  "minOSVer": "14.0",
   "url": "https://github.com/linzx91/jsbox-scripts/blob/master/video-collector/app.box?raw=true",
   "name": "影视大全",
   "author": "Aligege",
-  "description": "•  修复了一些错误"
+  "description": "•  调整了部分UI\n•  修复了已知问题\n"
 }
